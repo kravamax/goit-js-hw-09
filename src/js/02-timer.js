@@ -13,13 +13,20 @@ const ref = {
   seconds: document.querySelector('[data-seconds]'),
 };
 
+const options = {
+  enableTime: true,
+  time_24hr: true,
+  defaultDate: new Date(),
+  minuteIncrement: 1,
+  onClose(selectedDates) {
+    dateCheck(selectedDates);
+  },
+};
+
 let timerId = null;
-let currentDate = null;
-let timerDate = null;
 let differentMilliseconds = null;
 
 ref.startBtn.disabled = true;
-
 ref.inputData.addEventListener('focus', onInputClick);
 ref.startBtn.addEventListener('click', timerStart);
 
@@ -50,27 +57,15 @@ function addLeadingZero(value) {
   return String(value).padStart(2, 0);
 }
 
-const options = {
-  enableTime: true,
-  time_24hr: true,
-  defaultDate: new Date(),
-  minuteIncrement: 1,
-  onClose(selectedDates) {
-    dateCheck(selectedDates);
-  },
-};
-
 function dateCheck(selectedDates) {
-  currentDate = options.defaultDate;
-  timerDate = selectedDates[0];
+  const currentDate = options.defaultDate;
+  const timerDate = selectedDates[0];
 
   if (timerDate > currentDate) {
     ref.startBtn.disabled = false;
-
     differentMilliseconds = timerDate - currentDate;
   } else {
     ref.startBtn.disabled = true;
-
     Report.failure('Please choose a date in the future', ' <br/><br/>', 'Okay');
   }
 }
