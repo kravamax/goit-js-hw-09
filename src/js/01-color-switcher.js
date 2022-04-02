@@ -1,6 +1,7 @@
 const ref = {
   start: document.querySelector('[data-start]'),
   stop: document.querySelector('[data-stop]'),
+  bodyBackground: document.body.style.backgroundColor,
 };
 let timerId = null;
 
@@ -12,10 +13,7 @@ function onStartClick() {
   ref.start.disabled = true;
   ref.stop.disabled = false;
 
-  timerId = setInterval(() => {
-    document.body.style.backgroundColor = getRandomHexColor();
-    // console.log('Start click');
-  }, 1000);
+  timerId = setInterval(changeBackground, 1000);
 }
 
 function onStopClick() {
@@ -23,7 +21,10 @@ function onStopClick() {
   ref.stop.disabled = true;
 
   clearInterval(timerId);
-  //   console.log('Stop click');
+}
+
+function changeBackground() {
+  ref.bodyBackground = getRandomHexColor();
 }
 
 function getRandomHexColor() {
