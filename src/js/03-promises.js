@@ -1,4 +1,5 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+Notify.init({ useIcon: false });
 
 const refs = {
   form: document.querySelector('.form'),
@@ -36,9 +37,11 @@ function createPromise(position, delay) {
 }
 
 function onSuccess({ position, delay }) {
-  console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+  Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`, {
+    textColor: '#777',
+  });
 }
 
 function onError({ position, delay }) {
-  console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+  Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
 }
